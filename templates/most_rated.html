@@ -48,15 +48,15 @@
         <div class="card">
             <table>
             <tr>
-                <th>title</th>
-                <th>year</th>
-                <th>runtime</th>
-                <th>rating</th>
+                <th><a href='title/{{ new_direction }}'> title </a></th>
+                <th><a href='year'> year </a></th>
+                <th><a href='runtime'> runtime </a></th>
+                <th><a href='rating'> rating </a></th>
                 <th>genres</th>
                 <th>trailer</th>
                 <th>homepage</th>
             </tr>
-            {% for show in shows_15_best %}
+            {% for show in shows_sorted %}
             <tr>
                 <td> <a href = {{ show['id'] }}> {{ show['title'] }} </a> </td>
                 <td>{{ show['year'] }}</td>
@@ -65,16 +65,16 @@
                 <td>{{ show['genres'] }}</td>
                 <td>
                     {% if show['trailer'] == 'No URL' %}
-                    {{ show['trailer'] }}
+                        {{ show['trailer'] }}
                     {% else %}
-                    <a href = {{ show['trailer'] }}> Trailer </a>
+                        <a href = {{ show['trailer'] }}> Trailer </a>
                     {% endif %}
                 </td>
                 <td>
                     {% if show['homepage'] == 'No URL' %}
-                    {{ show['homepage'] }}
+                        {{ show['homepage'] }}
                     {% else %}
-                    <a href = {{ show['homepage'] }}> Homepage </a>
+                        <a href = {{ show['homepage'] }}> Homepage </a>
                     {% endif %}
                 </td>
             </tr>
@@ -83,28 +83,16 @@
         </div>
         <div class="card">
             <div class="pagination">
-                {% if page != 1 and page != False%}
-                <a href="{{ page - 1 }}"><<</a>
-                    {% else %}
-                    <<
+                {% if page != 1 %}
+                    <a href="{{ page - 1 }}">&laquo;</a>
                 {%  endif %}
-                {% for item in range(1, number_of_pages + 1) %}
-                <a {% if item == page %}
-                        class="active"
-                        {% elif page == False %}
-                            {% if item == 1 %}
+                {% for item in range(pages_shown_start, pages_shown_end + 1) %}
+                    <a{% if item == page %}
                             class="active"
-                            {% endif %}
-                        {% endif %} href="{{ item }}"> {{ item }} </a>
+                    {% endif %} href="{{ item }}"> {{ item }} </a>
                 {% endfor %}
                 {% if page != number_of_pages %}
-                    {% if page != False %}
-                        <a href="{{ page + 1 }}">>></a>
-                    {% else %}
-                        <a href="{{ 2 }}">>></a>
-                   {% endif %}
-                {% else %}
-                >>
+                    <a href="{{ page + 1 }}">&raquo;</a>
                 {% endif %}
             </div>
         </div>

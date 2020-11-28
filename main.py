@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 app = Flask('codecool_series')
 
+ROWS_PER_PAGE = 15
+PAGES_SHOWN = 5
+
 @app.route('/')
 def index():
     shows = queries.get_shows()
@@ -16,19 +19,44 @@ def index():
 def design():
     return render_template('design.html')
 
+@app.route('/shows')
+@app.route('/shows/<order>')
+@app.route('/shows/<order>/<direction>')
 @app.route('/shows/<int:page>')
+@app.route('/shows/<int:page>/<order>')
+@app.route('/shows/<int:page>/<order>/<direction>')
 @app.route('/shows/most-rated')
-def most_rated(page=False):
-    ROWS_PER_PAGE = 15
-    INITIAL_ROWS = 15
-    offset = 0
-    number_of_pages = int((queries.get_number_of_rows()[0]['count'] - INITIAL_ROWS) / ROWS_PER_PAGE)
-    if page != False:
-        offset = ROWS_PER_PAGE * page - INITIAL_ROWS
+@app.route('/shows/most-rated/<order>')
+@app.route('/shows/most-rated/<order>/<direction>')
+def most_rated(page=1, order='rating', direction='DESC'):
 
-    shows_15_best = queries.get_15_best(offset)
+    new_direction = direction
 
-    return render_template('most_rated.html', shows_15_best=shows_15_best, number_of_pages=number_of_pages, page=page)
+    if new_direction == 'DESC':
+        new_direction = 'ASC'
+
+    number_of_pages = int((queries.get_number_of_rows()[0]['count']) / ROWS_PER_PAGE) + 1
+    offset = ROWS_PER_PAGE * page - ROWS_PER_PAGE
+
+    shows_sorted = queries.get_sorted(order, direction, ROWS_PER_PAGE, offset)
+
+    pages_shown_start = int(page - ((PAGES_SHOWN - 1) / 2))
+    pages_shown_end = int(page + ((PAGES_SHOWN - 1) / 2))
+
+    if pages_shown_start < 1:
+        pages_shown_start = 1
+        pages_shown_end = PAGES_SHOWN
+    elif pages_shown_end > number_of_pages:
+        pages_shown_start = number_of_pages - PAGES_SHOWN + 1
+        pages_shown_end = number_of_pages
+
+    return render_template('most_rated.html',
+                           shows_sorted=shows_sorted,
+                           pages_shown_start=pages_shown_start,
+                           pages_shown_end=pages_shown_end,
+                           page=page,
+                           number_of_pages=number_of_pages,
+                           new_direction=new_direction)
 
 @app.route('/show/<id>')
 def shows_id(id):
