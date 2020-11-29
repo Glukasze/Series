@@ -19,21 +19,17 @@ def index():
 def design():
     return render_template('design.html')
 
-@app.route('/shows')
-@app.route('/shows/<order>')
-@app.route('/shows/<order>/<direction>')
-@app.route('/shows/<int:page>')
-@app.route('/shows/<int:page>/<order>')
+# @app.route('/shows')
+# @app.route('/shows/<order>')
+# @app.route('/shows/<order>/<direction>')
+# @app.route('/shows/<int:page>')
+# @app.route('/shows/<int:page>/<order>')
 @app.route('/shows/<int:page>/<order>/<direction>')
 @app.route('/shows/most-rated')
-@app.route('/shows/most-rated/<order>')
-@app.route('/shows/most-rated/<order>/<direction>')
+# @app.route('/shows/most-rated/<order>')
+# @app.route('/shows/most-rated/<order>/<direction>')
 def most_rated(page=1, order='rating', direction='DESC'):
 
-    new_direction = direction
-
-    if new_direction == 'DESC':
-        new_direction = 'ASC'
 
     number_of_pages = int((queries.get_number_of_rows()[0]['count']) / ROWS_PER_PAGE) + 1
     offset = ROWS_PER_PAGE * page - ROWS_PER_PAGE
@@ -56,7 +52,8 @@ def most_rated(page=1, order='rating', direction='DESC'):
                            pages_shown_end=pages_shown_end,
                            page=page,
                            number_of_pages=number_of_pages,
-                           new_direction=new_direction)
+                           direction=direction,
+                           order=order)
 
 @app.route('/show/<id>')
 def shows_id(id):

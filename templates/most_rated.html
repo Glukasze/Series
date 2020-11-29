@@ -48,10 +48,30 @@
         <div class="card">
             <table>
             <tr>
-                <th><a href='title/{{ new_direction }}'> title </a></th>
-                <th><a href='year'> year </a></th>
-                <th><a href='runtime'> runtime </a></th>
-                <th><a href='rating'> rating </a></th>
+                <th><a href='/shows/{{ page }}/title/{% if order == "title" and direction == "DESC" %}ASC
+                {% elif order == "title" and direction == "ASC" %}DESC
+                {% else %}{{ direction }}
+                {% endif %}'> title {% if order == "title" and  direction == "DESC" %}&darr;
+                {% elif order == "title" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
+                <th><a href='/shows/{{ page }}/year/{% if order == "year" and direction == "DESC" %}ASC
+                {% elif order == "year" and direction == "ASC" %}DESC
+                {% else %}{{ direction }}
+                {% endif %}'> year {% if order == "year" and  direction == "DESC" %}&darr;
+                {% elif order == "year" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
+                <th><a href='/shows/{{ page }}/runtime/{% if order == "runtime" and direction == "DESC" %}ASC
+                {% elif order == "runtime" and direction == "ASC" %}DESC
+                {% else %}{{ direction }}
+                {% endif %}'> runtime {% if order == "runtime" and  direction == "DESC" %}&darr;
+                {% elif order == "runtime" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
+                <th><a href='/shows/{{ page }}/rating/{% if order == "rating" and direction == "DESC" %}ASC
+                {% elif order == "rating" and direction == "ASC" %}DESC
+                {% else %}{{ direction }}
+                {% endif %}'> rating {% if order == "rating" and  direction == "DESC" %}&darr;
+                {% elif order == "rating" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
                 <th>genres</th>
                 <th>trailer</th>
                 <th>homepage</th>
@@ -84,15 +104,15 @@
         <div class="card">
             <div class="pagination">
                 {% if page != 1 %}
-                    <a href="{{ page - 1 }}">&laquo;</a>
+                    <a href="/shows/{{ page - 1 }}/{{ order }}/{{ direction }}">&laquo;</a>
                 {%  endif %}
                 {% for item in range(pages_shown_start, pages_shown_end + 1) %}
                     <a{% if item == page %}
                             class="active"
-                    {% endif %} href="{{ item }}"> {{ item }} </a>
+                    {% endif %} href="/shows/{{ item }}/{{ order }}/{{ direction }}"> {{ item }} </a>
                 {% endfor %}
                 {% if page != number_of_pages %}
-                    <a href="{{ page + 1 }}">&raquo;</a>
+                    <a href="/shows/{{ page + 1 }}/{{ order }}/{{ direction }}">&raquo;</a>
                 {% endif %}
             </div>
         </div>
