@@ -48,28 +48,20 @@
         <div class="card">
             <table>
             <tr>
-                <th><a href='/shows/{{ page }}/title/{% if order == "title" and direction == "DESC" %}ASC
-                {% elif order == "title" and direction == "ASC" %}DESC
-                {% else %}{{ direction }}
-                {% endif %}'> title {% if order == "title" and  direction == "DESC" %}&darr;
+                <th><a href={{ get_order(page, order, 'title', direction) }}> title
+                    {% if order == "title" and  direction == "DESC" %}&darr;
                 {% elif order == "title" and direction == "ASC" %}&uarr;
                 {% endif %}</a></th>
-                <th><a href='/shows/{{ page }}/year/{% if order == "year" and direction == "DESC" %}ASC
-                {% elif order == "year" and direction == "ASC" %}DESC
-                {% else %}{{ direction }}
-                {% endif %}'> year {% if order == "year" and  direction == "DESC" %}&darr;
+                <th><a href={{ get_order(page, order, 'year', direction) }}> year
+                    {% if order == "year" and  direction == "DESC" %}&darr;
                 {% elif order == "year" and direction == "ASC" %}&uarr;
                 {% endif %}</a></th>
-                <th><a href='/shows/{{ page }}/runtime/{% if order == "runtime" and direction == "DESC" %}ASC
-                {% elif order == "runtime" and direction == "ASC" %}DESC
-                {% else %}{{ direction }}
-                {% endif %}'> runtime {% if order == "runtime" and  direction == "DESC" %}&darr;
+                <th><a href={{ get_order(page, order, 'runtime', direction) }}> runtime
+                    {% if order == "runtime" and  direction == "DESC" %}&darr;
                 {% elif order == "runtime" and direction == "ASC" %}&uarr;
                 {% endif %}</a></th>
-                <th><a href='/shows/{{ page }}/rating/{% if order == "rating" and direction == "DESC" %}ASC
-                {% elif order == "rating" and direction == "ASC" %}DESC
-                {% else %}{{ direction }}
-                {% endif %}'> rating {% if order == "rating" and  direction == "DESC" %}&darr;
+                <th><a href={{ get_order(page, order, 'rating', direction) }}> rating
+                    {% if order == "rating" and  direction == "DESC" %}&darr;
                 {% elif order == "rating" and direction == "ASC" %}&uarr;
                 {% endif %}</a></th>
                 <th>genres</th>
@@ -78,7 +70,7 @@
             </tr>
             {% for show in shows_sorted %}
             <tr>
-                <td> <a href = {{ show['id'] }}> {{ show['title'] }} </a> </td>
+                <td> <a href = '/show/{{ show['id'] }}'> {{ show['title'] }} </a> </td>
                 <td>{{ show['year'] }}</td>
                 <td>{{ show['runtime'] }}</td>
                 <td>{{ show['round'] }}</td>
