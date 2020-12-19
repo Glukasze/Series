@@ -29,6 +29,7 @@
 
     <!-- page specific styling -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style/pagination.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/modal.css') }}">
 
 </head>
 <body>
@@ -44,6 +45,21 @@
         </div>
     </header>
     <section>
+{#    Modal search by rating#}
+{#        <div class="card">#}
+{#            <button type="button" id="modal_button">Search by actor</button>#}
+{#            <div id="modal_div" class="modal">#}
+{#                <div class="modal_content">#}
+{#                    <div id="ajax_div">#}
+{#                        <p id="ajax_p"></p>#}
+{#                        <label for="input">Select actor: </label>#}
+{#                        <input type="text" id="input" name="input">#}
+{#                        <button id="button" type="button">Click</button>#}
+{#                    </div>#}
+{#                    <span class="modal_close">&times</span>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
         <h1 class="title text-center">Shows</h1>
         <div class="card">
             <table>
@@ -117,6 +133,6 @@
     <div class="dark-blue-layer"></div>
     <div class="light-blue-layer"></div>
 </div>
-{#<script src="{{ url_for('static', filename='js/script.js') }}"></script>#}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
