@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>{{ show_detailed[0]['title'] }}</title>
+
+    <!-- Import Montserrat font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <!-- Normalize.css fixes lot of differences between browsers default styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"/>
+
+    <!-- project wide styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/site.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/background.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/button.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/card.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/grid.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/utils.css') }}">
+
+    <!-- page specific styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/detailed-view.css') }}">
+</head>
+
+<body>
+<div id="body-wrapper">
+    <header class="clearfix">
+        <img id="header-logo" src="{{ url_for('static', filename='assets/codecool-logo.png') }}" alt="Codecool Logo">
+        <span id="header-title" class="title">
+                    Codecool Series DB
+                </span>
+        <div id="header-auth">
+            <button type="button" id="bt-register">Register</button>
+            <button type="button" id="bt-login">Login</button>
+        </div>
+    </header>
+    <section>
+        <nav class="breadcrumb">
+            <a href="#">{{ show_detailed[0]['title'] }}</a>
+{#            <span class="separator">&gt;</span>#}
+{#            <a href="#">Season 3</a>#}
+{#            <span class="separator">&gt;</span>#}
+{#            <a href="#">Episode 8</a>#}
+        </nav>
+        <h1 class="title text-center">Detailed view</h1>
+        <div class="card detailed-view">
+            <p>And here is a "detailed" kind of view:</p>
+            <div class="row">
+                <img src="http://www.impawards.com/2016/posters/deadpool_ver5.jpg" alt="Deadpool poster"
+                     class="poster col col-third">
+                <div class="col col-twothird">
+                    <h2>{{ show_detailed[0]['title'] }}</h2>
+                    <p class="small grayed">{{ runtime_formatted }} <span class="separator">|</span>
+                        {{ show_detailed[0]['genres'] }} <span
+                            class="separator">|</span> {{ show_detailed[0]['round'] }} &#9733</p>
+                    <p> {{ show_detailed[0]['overview'] }} </p>
+                </div>
+            </div>
+            <div>
+                <p><b>Stars:</b> {% for actor in actors %}<a href="#">{{ actor }}</a>{% endfor %}</p>
+            </div>
+        </div>
+         <div class="card">
+            Seasons:
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Overview</th>
+                    <th class="action-column">e</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for season in seasons %}
+                <tr>
+                    <td>{{ season['season_number'] }}</td>
+                    <td>{{ season['title'] }}</td>
+                    <td>{{ season['overview'] }}</td>
+                    <td class="action-column">
+                        <button type="button" class="icon-button"><i class="fa fa-edit fa-fw"></i></button>
+                        <button type="button" class="icon-button"><i class="fa fa-trash fa-fw"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{#        <div class="card">#}
+{#            <p>A form example to edit a TV show's episode:</p>#}
+{#            <form action="#" method="post">#}
+{#                <p class="form-element">#}
+{#                    <label class="form-element-label" for="form-example-show">Show:</label>#}
+{#                    <select name="show" id="form-example-show">#}
+{#                        <option value="">Game of Thrones (2011)</option>#}
+{#                        <option value="">Lost (2004)</option>#}
+{#                        <option value="">South Park (1997)</option>#}
+{#                        <option value="">How I met your mother (2005)</option>#}
+{#                        <option value="">Legion (2017)</option>#}
+{#                    </select>#}
+{#                </p>#}
+{#                <p class="form-element">#}
+{#                    <label class="form-element-label" for="form-example-season">Season:</label>#}
+{#                    <input type="number" name="season" id="form-example-season" value="" min="1" max="30">#}
+{#                </p>#}
+{#                <p class="form-element">#}
+{#                    <label class="form-element-label" for="form-example-episode">Episode:</label>#}
+{#                    <input type="number" name="episode" id="form-example-episode" value="" min="1" max="100">#}
+{#                </p>#}
+{#                <p class="form-element">#}
+{#                    <label class="form-element-label" for="form-example-title">Title:</label>#}
+{#                    <input type="text" name="name" id="form-example-title" value="" placeholder="What the pencake?">#}
+{#                </p>#}
+{#                <p class="form-element">#}
+{#                    <label class="form-element-label" for="form-example-length">Length:</label>#}
+{#                    <input type="number" name="length" id="form-example-length" value="" min="1" max="999">#}
+{#                    <span>min.</span>#}
+{#                </p>#}
+{#                <p class="text-center">#}
+{#                    <button type="submit">Submit</button>#}
+{#                </p>#}
+{#            </form>#}
+{#        </div>#}
+    </section>
+    <footer>
+        Copyright, bla-bla
+    </footer>
+</div>
+<div class="background">
+    <div class="dark-blue-layer"></div>
+    <div class="light-blue-layer"></div>
+</div>
+<script src="{{ url_for('static', filename='js/embed-youtube.js') }}"></script>
+</body>
+
+</html>

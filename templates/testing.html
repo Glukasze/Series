@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
     <!-- Normalize.css fixes lot of differences between browsers default styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"/>
 
@@ -34,32 +35,35 @@
 <div id="body-wrapper">
     <header class="clearfix">
         <img id="header-logo" src="{{ url_for('static', filename='assets/codecool-logo.png') }}" alt="Codecool Logo">
-        <span id="header-title" class="title">Codecool Series DB</span>
+        <span id="header-title" class="title">
+                    Codecool Series DB
+                </span>
         <div id="header-auth">
             <button type="button" id="bt-register">Register</button>
             <button type="button" id="bt-login">Login</button>
         </div>
     </header>
     <section>
-        <h1 class="title text-center">Welcome page</h1>
         <div class="card">
-            <h2>Welcome TV show lovers!</h2>
-            <p>This great site is happy to bring you your favourite TV show's <i>details</i>.</p>
-            <p></p>
-            <p>Okay, actually this is a designed dumb page without any logic.</p>
-            <p>You can find a navigational element, the so called "breadcrumb" above the page's title. Use it for
-                in-depth
-                navigation.
-            </p>
+            <label for="input">Enter show</label>
+            <input type="text" id="search_input" name="input">
+            <button type="button" id="search_button">Search</button>
         </div>
         <div class="card">
-            <ul>
-                {% for show in shows %}
-                    <li>
-                        <a href="{{ '/show/' + (show['id'] | string) }}">{{ show['title'] }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+            <h2 id="search_h2"></h2>
+            <p id="search_p"></p>
+        </div>
+        <div class="card">
+            <table>
+                <tr>
+                    <th>episode number</th>
+                    <th>episode title</th>
+                </tr>
+                <tr>
+                    <td>{{ episode[0]['episode_number'] }}</td>
+                    <td>{{ episode[0]['title'] }}</td>
+                </tr>
+            </table>
         </div>
     </section>
     <footer>
@@ -70,5 +74,7 @@
     <div class="dark-blue-layer"></div>
     <div class="light-blue-layer"></div>
 </div>
+<script src="{{ url_for('static', filename='js/testing.js') }}"></script>
 </body>
+
 </html>

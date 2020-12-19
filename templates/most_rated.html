@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Shows</title>
+
+    <!-- Import Montserrat font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <!-- Normalize.css fixes lot of differences between browsers default styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"/>
+
+    <!-- project wide styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/site.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/background.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/button.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/card.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/grid.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/utils.css') }}">
+
+    <!-- page specific styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/pagination.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/modal.css') }}">
+
+</head>
+<body>
+<div id="body-wrapper">
+    <header class="clearfix">
+        <img id="header-logo" src="{{ url_for('static', filename='assets/codecool-logo.png') }}" alt="Codecool Logo">
+        <span id="header-title" class="title">
+                    Codecool Series DB
+                </span>
+        <div id="header-auth">
+            <button type="button" id="bt-register">Register</button>
+            <button type="button" id="bt-login">Login</button>
+        </div>
+    </header>
+    <section>
+{#    Modal search by rating#}
+{#        <div class="card">#}
+{#            <button type="button" id="modal_button">Search by actor</button>#}
+{#            <div id="modal_div" class="modal">#}
+{#                <div class="modal_content">#}
+{#                    <div id="ajax_div">#}
+{#                        <p id="ajax_p"></p>#}
+{#                        <label for="input">Select actor: </label>#}
+{#                        <input type="text" id="input" name="input">#}
+{#                        <button id="button" type="button">Click</button>#}
+{#                    </div>#}
+{#                    <span class="modal_close">&times</span>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+        <h1 class="title text-center">Shows</h1>
+        <div class="card">
+            <table>
+            <tr>
+                <th><a href={{ get_order(page, order, 'title', direction) }}> title
+                    {% if order == "title" and  direction == "DESC" %}&darr;
+                {% elif order == "title" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
+                <th><a href={{ get_order(page, order, 'year', direction) }}> year
+                    {% if order == "year" and  direction == "DESC" %}&darr;
+                {% elif order == "year" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
+                <th><a href={{ get_order(page, order, 'runtime', direction) }}> runtime
+                    {% if order == "runtime" and  direction == "DESC" %}&darr;
+                {% elif order == "runtime" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
+                <th><a href={{ get_order(page, order, 'rating', direction) }}> rating
+                    {% if order == "rating" and  direction == "DESC" %}&darr;
+                {% elif order == "rating" and direction == "ASC" %}&uarr;
+                {% endif %}</a></th>
+                <th>genres</th>
+                <th>trailer</th>
+                <th>homepage</th>
+            </tr>
+            {% for show in shows_sorted %}
+            <tr>
+                <td> <a href = '/show/{{ show['id'] }}'> {{ show['title'] }} </a> </td>
+                <td>{{ show['year'] }}</td>
+                <td>{{ show['runtime'] }}</td>
+                <td>{{ show['round'] }}</td>
+                <td>{{ show['genres'] }}</td>
+                <td>
+                    {% if show['trailer'] == 'No URL' %}
+                        {{ show['trailer'] }}
+                    {% else %}
+                        <a href = {{ show['trailer'] }}> Trailer </a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if show['homepage'] == 'No URL' %}
+                        {{ show['homepage'] }}
+                    {% else %}
+                        <a href = {{ show['homepage'] }}> Homepage </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div class="card">
+            <div class="pagination">
+                {% if page != 1 %}
+                    <a href="/shows/{{ page - 1 }}/{{ order }}/{{ direction }}">&laquo;</a>
+                {%  endif %}
+                {% for item in range(pages_shown_start, pages_shown_end + 1) %}
+                    <a{% if item == page %}
+                            class="active"
+                    {% endif %} href="/shows/{{ item }}/{{ order }}/{{ direction }}"> {{ item }} </a>
+                {% endfor %}
+                {% if page != number_of_pages %}
+                    <a href="/shows/{{ page + 1 }}/{{ order }}/{{ direction }}">&raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <footer>
+        Copyright, bla-bla
+    </footer>
+</div>
+<div class="background">
+    <div class="dark-blue-layer"></div>
+    <div class="light-blue-layer"></div>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

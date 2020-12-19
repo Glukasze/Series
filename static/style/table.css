@@ -23,6 +23,7 @@ table th a:hover {
 
 table td {
     font-size: 13px;
+    min-width: 60px;
 }
 
 table th,
